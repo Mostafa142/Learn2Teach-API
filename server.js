@@ -19,14 +19,24 @@ app.use(express.json())
 
 // 1.Authentication 
 const authRouter = require('./routes/auth.route')
-app.use('/', authRouter)
+app.use('/api/', authRouter)
 
 // 2.Coach 
-const coachRouter = require('./routes/coaches.route')
-app.use('/coaches', coachRouter)
+const CoachRouter = require('./routes/coaches.route')
+app.use('/api/coaches', CoachRouter)
 
 // 3.Learner
-const learnerRouter = require('./routes/coaches.route')
-app.use('/coaches', learnerRouter)
+const learnerRouter = require('./routes/learners.route')
+app.use('/api/learners', learnerRouter)
+
+// 4.Experiences 
+const experiencesRouter = require('./routes/experiences.route')
+app.use('/api/experiences', experiencesRouter);
+
+// 5.Sessions 
+const sessionRouter = require('./routes/sessions.route')
+app.use('/api/experiences', sessionRouter);
+
+
 
 app.listen(port, () => console.log(`Server Started on port ${port}!`))

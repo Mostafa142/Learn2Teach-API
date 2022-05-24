@@ -1,11 +1,11 @@
-const Joi = require('joi')
+const coachJoi = require('joi')
 const coachModel = require("../models/coach.model");
 
-const schema = Joi.object({
-    name: Joi.string().min(2).max(50).required(),
-    age: Joi.number().min(14).max(100).required(),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    experience: Joi.string().min(2).max(50).required()
+const coachSchema = coachJoi.object({
+    name: coachJoi.string().min(2).max(50).required(),
+    age: coachJoi.number().min(14).max(100).required(),
+    email: coachJoi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+    experience: coachJoi.string().min(2).max(50).required()
 });
 
 // View all Coaches 
@@ -27,10 +27,10 @@ exports.createCoach = async (req, res) => {
             email: req.body.email,
             experience: req.body.experience
         }
-        const { error, value } = await schema.validateAsync(input)
+        const { error, value } = await coachSchema.validateAsync(input)
 
         if (error) {
-            res.status(400).json({ success: false, error: value });
+            res.status(400).json({ success: false, error: error });
         }
         let newCoach = new coachModel(input);
         newCoach = await newCoach.save()
